@@ -5,7 +5,7 @@ const addEmployeesBtn = document.querySelector("#add-employees-btn");
 const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
 
-  //To allow our while loop to operate, we set a variable as 'true'. (See further details at while loop below)
+  //To allow our while loop located below to operate, we set a variable as 'true'.
   let newEmployee = true;
 
   //Initialise an empty array for the employee object data to be added.
@@ -21,7 +21,7 @@ const collectEmployees = function () {
   ];
 
   //A while loop is used so we can keep adding employees as long as the newEmployee variable is set to 'true'.
-  while (newEmployee == true) {
+  while (newEmployee) {
     //Within the while loop, we prompt the user for their first name and initialise it to a new variable.
     let inputFirstName = prompt(`Enter first name:`);
     //We then assign this new prompt data to the employee object's firstName property.
@@ -32,14 +32,14 @@ const collectEmployees = function () {
 
     //When the user inputs their salary, an if statement is used to check if is not a number using the 'isNan' function.
     let inputSalary = prompt(`Enter salary:`);
+    //If the salary inputed is not a number, the inputSalary variable is asigned to '0'. Otherwise, the process continues.
     if (isNaN(inputSalary)) {
-      //If it is not a number, the inputSalary variable is asigned to '$0'. If it is a number, the process continues without change.
-      inputSalary = `$` + 0;
+      inputSalary = 0;
     } else {
     }
 
     //In order to enable number formatting to each 1000, the Intl.NumberFormat method is used when assigning the salary to a new variable.
-    //For example, if 50000 is entered, this method converts it to 50,000.
+    //For example, if a salary of 50000 is entered, this method converts it to 50,000.
     //This method was sourced from an MDN web docs page. Please see my README.MD file for more information.
     let number = new Intl.NumberFormat().format(inputSalary);
 
@@ -54,11 +54,11 @@ const collectEmployees = function () {
     //A window confirm prompt is called to ask the user if they'd like to add another employee. The result is asigned to the variable 'confirm'.
     let confirm = window.confirm("Would you like to enter another employee?");
     if (confirm) {
-      //If the user confirms, the 'newEmployee' value remains true and the while loop continues which allows the user to add additional employees.
-      newEmployee == true;
+      //If the user says 'OK' (confirm === true), the 'newEmployee' value remains true and the while loop continues allowing the user to add additional employees.
+      newEmployee === true;
     } else {
       //Otherwise, if the user hits 'cancel', the while loop is stopped and the employeesArray is returned. The functions below then add the data to the webpage.
-      newEmployee == false;
+      newEmployee === false;
       return employeesArray;
     }
   }
@@ -68,12 +68,13 @@ const collectEmployees = function () {
 const displayAverageSalary = function (employeesArray) {
   // TODO: Calculate and display the average salary
 
-  //Assigns 0 to the totalSalary variable so we can add to it.
+  //0 is assigned to the totalSalary variable so we can add to it.
   let totalSalary = 0;
 
-  //For-loop is used to loop through all employees. 0 is the starting point as we increment by 1 until we reach the total number of employees entered (employeesArray length).
+  //A For-loop is used to loop through all employees entered. 0 is the starting point as we increment by 1 until we reach the total number of employees entered (employeesArray length).
   for (let i = 0; i < employeesArray.length; i++) {
-    //Each salary entry is addeded to the totalSalary variable. The replace method is used with a regex of 'D' to strip all non-numeric characters (only a '$') so the salary can be totaled and averaged below.
+    //Each salary entry is addeded to the totalSalary variable.
+    //The replace method is used with a regex of '\D' to strip all non-numeric characters so the salary can be totaled and averaged below.
     //This method was sourced from a Stack Overflow post. Please see my README.MD file for more information.
     totalSalary += parseInt(employeesArray[i].salary.replace(/\D/g, ""));
   }
@@ -94,7 +95,8 @@ const getRandomEmployee = function (employeesArray) {
   //Generates a random number between 0 and the number of employees.
   let randomEmployeeNumber = Math.floor(Math.random() * employeesArray.length);
 
-  //Using string concatonation, we use the random number generated to access that point in the array. Then, the first and last name of the winning employee are concatonated and logged to the console.
+  //We use the random number assigned to 'randomEmployeeNumber' to access that point in the array.
+  //Then, the first and last name of the winning employee are concatanated and logged to the console.
   console.log(
     `Congratulations to ${employeesArray[randomEmployeeNumber].firstName} ${employeesArray[randomEmployeeNumber].lastName}, our random drawing winner!`
   );
